@@ -1,0 +1,80 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+
+    <nav aria-label="breadcrumb" id="pegada" *ngIf="mostrarPegada">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/veiculos']">veiculos</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/veiculos/marca']">marca</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Marca</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formMarca">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-2">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" id="id" formControlName="id" [(ngModel)]="marca.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-8 col-xl-8">
+          <label for="nome">
+            <font color="black">Nome</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-bookmark"></i>
+              </div>
+            </div>
+            <input type="text" id="nome" formControlName="nome" [(ngModel)]="marca.nome" class="form-control">
+          </div>
+          <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('nome')"
+             msgErro="O nome da marca é obrigatório.">
+           </app-campo-invalid>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button type="submit" class="btn btn-success" [disabled]="!formMarca.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>

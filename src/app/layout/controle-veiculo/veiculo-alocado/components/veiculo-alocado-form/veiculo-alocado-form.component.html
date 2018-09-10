@@ -1,0 +1,222 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+
+    <nav aria-label="breadcrumb" *ngIf="mostrarBread">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/controleVeiculo']">controleVeiculo</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/controleVeiculo/veiculoAlocado']">VeiculoAlocado</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+
+    <header>
+      <h2>
+        <font color="black">Formulario de alocação de veiculo</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formVeiculoAlocado">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="veiculoAlocado.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="veiculo">
+            <label for="veiculo">
+              <font color="black">Veiculo</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="veiculo" formControlName="id" [(ngModel)]="veiculoAlocado.veiculo.id" class="form-control">
+                <option selected>Selecione um veiculo</option>
+                <option *ngFor="let veiculo of veiculos" value="{{veiculo.id}}">{{veiculo.placa}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#veiculoModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid [mostrarErro]="verificaValidTouched('veiculo.id')" msgErro="O veiculo é obrigatório.">
+            </app-campo-invalid>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="frota">
+            <label for="frota">
+              <font color="black">Frota</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="frota" formControlName="id" [(ngModel)]="veiculoAlocado.frota.id" class="form-control">
+                <option selected>Selecione uma frota</option>
+                <option *ngFor="let frota of frotas" value="{{frota.id}}">{{frota.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#frotaModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid [mostrarErro]="verificaValidTouched('frota.id')" msgErro="A frota para o alocamento é obrgatório.">
+            </app-campo-invalid>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="data_inicio">
+            <font color="black">Data de inicio</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar-plus"></i>
+              </div>
+            </div>
+            <input type="date" formControlName="data_inicio" [(ngModel)]="veiculoAlocado.data_inicio" class="form-control">
+          </div>
+          <app-campo-invalid [mostrarErro]="verificaValidTouched('data_inicio')" msgErro="A data de inicio é obrigatório.">
+          </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="data_termino">
+            <font color="black">Data de termino</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar-times"></i>
+              </div>
+            </div>
+            <input readonly id="termino" type="date" formControlName="data_termino" [(ngModel)]="veiculoAlocado.data_termino" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div formGroupName="condutor">
+            <label for="condutor_responsavel">
+              <font color="black">Condutor responsavel</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="condutor_responsavel" formControlName="id" [(ngModel)]="veiculoAlocado.condutor.id" class="form-control">
+                <option selected>Selecione um condutor responsavel pelo veiculo</option>
+                <option *ngFor="let condutor of condutores" value="{{condutor.id}}">{{condutor.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#tecnicoModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+          <button type="submit" class="btn btn-success" [disabled]="!formVeiculoAlocado.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+
+        </div>
+      </div>
+
+    </form>
+
+    <div class="modal fade" id="veiculoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <veiculo-form></veiculo-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="frotaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <frota-form></frota-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="tecnicoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <condutor-form></condutor-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

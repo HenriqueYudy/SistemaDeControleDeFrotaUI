@@ -1,0 +1,36 @@
+<div class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/imagens/logo.png" width="150px" class="user-avatar" />
+            <h1>OnNet Telecom</h1>
+
+            <h5>Login</h5>
+            <br>
+
+            <form [formGroup]="formLogin">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input [(ngModel)]="userLogin.username" formControlName="username" id="username" type="text" class="validate" class="form-control">
+                        <label class="active" for="usuario">Usuário</label>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input [(ngModel)]="userLogin.password" formControlName="password" id="password" type="password" class="validate" class="form-control">
+                        <label class="active" for="password">Password</label>
+                    </div>
+                </div>
+
+                <br>
+
+                <button class="btn waves-effect waves-light" type="btn" (click)="login()">Login
+                </button>
+                <a [routerLink]="['/register']">
+                    <button class="btn waves-effect waves-light" type="btn" name="action">Registrar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

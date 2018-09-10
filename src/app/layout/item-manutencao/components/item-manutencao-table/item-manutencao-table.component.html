@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input #gb type="text" pInputText size="30" placeholder="Filtro Global">
+
+
+      <div id="table">
+        <p-dataTable [value]="itemManutencoes" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt scrollable="true" scrollWidth="100%"
+          [style]="{'margin-top':'30px'}">
+          <p-header>Lista de Item de Manutenção</p-header>
+          <p-column field="id" header="ID" [filter]="true" filterPlaceholder="ID" [style]="{'width':'150px'}"></p-column>
+
+          <p-column field="manutencao.veiculo_alocado.veiculo.placa" header="Veiculo" [filter]="true" filterMatchMode="equals" filterPlaceholder="Veiculo"
+            [style]="{'width':'200px'}">
+          </p-column>
+
+          <p-column field="manutencao.veiculo_alocado.frota.nome" header="Frota" [filter]="true" filterMatchMode="equals" filterPlaceholder="Frota"
+            [style]="{'width':'200px'}">
+          </p-column>
+
+          <p-column field="manutencao.data_manutencao" header="Data da manutenção" [filter]="true" filterMatchMode="equals" filterPlaceholder="Manutenção"
+          [style]="{'width':'200px'}">
+        </p-column>
+
+          <p-column field="manutencao.descricao_manutencao" header="Manutencão" [filter]="true" filterMatchMode="equals" filterPlaceholder="Manutenção"
+            [style]="{'width':'200px'}">
+          </p-column>
+
+          <p-column field="produto_servico.nome" header="Produto e Serviço" [filter]="true" filterMatchMode="equals" filterPlaceholder="Produto e Serviço"
+            [style]="{'width':'350px'}">
+          </p-column>
+
+          <p-column field="quantidade" header="Quantidade" [filter]="true" filterMatchMode="equals" filterPlaceholder="Quantidade"
+            [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-column field="valor_unitario" header="Valor Unitário" [filter]="true" filterMatchMode="equals" filterPlaceholder="Valor Unitário"
+            [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-footer>
+            <div class="ui-helper-clearfix" style="width:10%" class="noprint">
+              <a routerLink="form">
+                <button type="btn" class="btn btn-info" icon="fa-plus" label="Add" iconPos="left">Add
+                  <i class="fa fa-plus"></i>
+                </button>
+              </a>
+            </div>
+          </p-footer>
+
+        </p-dataTable>
+      </div>
+    </div>
+  </div>
+</div>

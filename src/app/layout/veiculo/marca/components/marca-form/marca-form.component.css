@@ -1,0 +1,15 @@
+.h2{
+    font-family: 'Times New Roman', Times, serif;   
+}
+
+
+.ng-invalid.ng-touched:not(form):not(div){
+    border: solid 1px red;
+    border-radius: 5px;
+}
+
+
+.ng-valid:not(form):not(div){
+    border: solid 1px #0cbf0c;
+    border-radius: 5px;
+}

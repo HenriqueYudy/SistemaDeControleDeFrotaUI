@@ -1,0 +1,436 @@
+<div [@routerTransition]>
+  <div class="container-fluid" class="no-print">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/abastecimentos']">abastecimento</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Abastecimento</font>
+      </h2>
+    </header>
+    <br>
+
+    <form [formGroup]="formAbastecimento">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input id="codigoAbs" readonly type="text" formControlName="id" [(ngModel)]="abastecimento.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="veiculo_alocado">
+            <label for="veiculo_alocado">
+              <font color="black">Veiculo</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="veiculo_alocado" formControlName="id" [(ngModel)]="abastecimento.veiculo_alocado.id" class="form-control">
+                <option selected>Selecione um veiculo</option>
+                <option *ngFor="let veiculoAlocado of veiculoAlocados" value="{{veiculoAlocado.id}}">{{veiculoAlocado.veiculo.placa}} - {{veiculoAlocado.frota.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#veiculoAlocadoModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid [mostrarErro]="verificaValidTouched('veiculo_alocado.id')" msgErro="O veiculo é obrigatório.">
+            </app-campo-invalid>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="fornecedor">
+            <label for="fornecedor">
+              <font color="black">Fornecedor</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="fornecedor" formControlName="id" [(ngModel)]="abastecimento.fornecedor.id" class="form-control">
+                <option selected>Selecione um fornecedor</option>
+                <option *ngFor="let fornecedor of fornecedores" value="{{fornecedor.id}}">{{fornecedor.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#fornecedorModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid [mostrarErro]="verificaValidTouched('fornecedor.id')" msgErro="O fornecedor da manutenção é obrigatório.">
+            </app-campo-invalid>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="data_abastecimento">
+            <font color="black">Data de abastecimento</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar"></i>
+              </div>
+            </div>
+            <input id="dataAbs" type="date" formControlName="data_abastecimento" [(ngModel)]="abastecimento.data_abastecimento" class="form-control">
+          </div>
+          <app-campo-invalid [mostrarErro]="verificaValidTouched('data_abastecimento')" msgErro="A data do abastecimento é obrigatório.">
+          </app-campo-invalid>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="numero_cupom_fiscal">
+            <font color="black">Número do cupom fiscal</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-barcode"></i>
+              </div>
+            </div>
+            <input type="number" formControlName="numero_cupom_fiscal" [(ngModel)]="abastecimento.numero_cupom_fiscal" class="form-control">
+          </div>
+          <app-campo-invalid [mostrarErro]="verificaValidTouched('numero_cupom_fiscal')" msgErro="O número do cupom fiscal é obrigatório.">
+          </app-campo-invalid>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="odometro">
+            <font color="black">Hodômetro</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-tachometer-alt"></i>
+              </div>
+            </div>
+            <input type="number" formControlName="hodometro" [(ngModel)]="abastecimento.hodometro" class="form-control">
+          </div>
+          <app-campo-invalid [mostrarErro]="verificaValidTouched('hodometro')" msgErro="O hodômetro do veiculo é obrigatório.">
+          </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="quantidade_abastecida">
+            <font color="black">Quantidade abastecida</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-cubes"></i>
+              </div>
+            </div>
+            <input id="litrosAbs" type="number" formControlName="quantidade_abastecida" [(ngModel)]="abastecimento.quantidade_abastecida"
+              class="form-control" placeholder="Litros">
+          </div>
+          <app-campo-invalid [mostrarErro]="verificaValidTouched('quantidade_abastecida')" msgErro="A quantidade abastecida é obrigatório.">
+          </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="valor_total">
+            <font color="black">Valor total</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-money-bill-alt"></i>
+              </div>
+            </div>
+            <input id="valorAbs" type="number" formControlName="valor_total" [(ngModel)]="abastecimento.valor_total" class="form-control">
+          </div>
+          <app-campo-invalid [mostrarErro]="verificaValidTouched('valor_total')" msgErro="O valor total é obrigatório.">
+          </app-campo-invalid>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button type="submit" class="btn btn-success" [disabled]="!formAbastecimento.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+          <button type="btn" id="pdfButton" (click)="pdfConverter()" class="btn btn-warning">Gerar Requisição
+            <i class="fas fa-file-pdf"></i>
+          </button>
+        </div>
+
+      </div>
+
+
+    </form>
+  </div>
+
+  <!-- Modal Fornecedor -->
+
+  <div class="modal fade" id="fornecedorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <fornecedor-form></fornecedor-form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal veiculo alocado-->
+  <div class="modal fade" id="veiculoAlocadoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <veiculo-alocado-form></veiculo-alocado-form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="ImprimirReq"  id="pdfContent" #pdfContent class="requisicao" style="margin-top: 10px;">
+    <div style="text-align: left; right: 100px; bottom: 200px">
+
+      <div class="row">
+        <div class="card col-8" style="max-height: 200px; border: solid 1px black;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-1">
+                <img src="assets/imagens/OnNetTelecom.png" style="margin-top: 20px;" width="160px;">
+              </div>
+              <div class="offset-4"></div>
+              <div class="col-7">
+                <p style="text-align: center;">
+                  Rua Osório Afonso, 546
+                  <br> Bairro Constantino
+                  <br> Fone: (34) 3515-2222
+                  <br> 38747-530 - Patrocínio - MG
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-4" style="max-height: 200px; border: solid 1px black;">
+          <div style="text-align: center;" class="card-body">
+            <div class="row">
+              <div class="cabeçalhoNumero">
+                <b>Requisição de Abastecimento:</b>
+              </div>
+
+              <div style="text-align: left; padding: 10px">
+                <p style="font-size: 4mm">
+                  <b>Nº {{_Codigo}}</b>
+                </p>
+                <p>
+                  <b>Data: {{_Day}}/{{_Month}}/{{_Year}}</b>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card col-12" style="border: solid 1px black;">
+          <div class="card-body" style="text-align: left;">
+            Firma: {{_NomeFornecedor}}
+            <br> Autorizamos a entregar ao portador(a): {{_condutor}}
+            <br> Veiculo : {{_placa}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <table class="table table-bordered col-12">
+          <tr>
+            <th>Qtd.</th>
+            <th>Descrição</th>
+            <th>Total</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Combustivel</td>
+            <td>{{_Total}}</td>
+          </tr>
+        </table>
+      </div>
+      <div style="margin-top: -20px;"></div>
+      <div class="row">
+        <div class="card col-9" style="border: solid 1px black;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                Debitar em nossa conta as mercadorias acima.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-3" style="border: solid 1px black;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <b>Total: {{_Total}}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card col-12" style="border: solid 1px black;">
+          <div class="card-body">
+            Autorizado por:___________________________________________________________________
+            <br>
+            <b style="text-align: center; margin-left: 250px">{{_Usuario}}</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="ImprimirReq"  #pdfContent class="requisicao">
+      <div style="text-align: left; right: 100px; bottom: 200px">
+  
+        <div class="row">
+          <div class="card col-8" style="max-height: 200px; border: solid 1px black">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-1">
+                  <img src="assets/imagens/OnNetTelecom.png" style="margin-top: 20px;" width="160px;">
+                </div>
+                <div class="offset-4"></div>
+                <div class="col-7">
+                  <p style="text-align: center;">
+                         Rua Osório Afonso, 546
+                    <br> Bairro Constantino
+                    <br> Fone: (34) 3515-2222
+                    <br> 38747-530 - Patrocínio - MG
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card col-4" style="max-height: 200px; border: solid 1px black;">
+            <div style="text-align: center;" class="card-body">
+              <div class="row">
+                <div class="cabeçalhoNumero">
+                  <b>Requisição de Abastecimento:</b>
+                </div>
+  
+                <div style="text-align: left; padding: 10px">
+                  <p style="font-size: 4mm">
+                    <b>Nº {{_Codigo}}</b>
+                  </p>
+                  <p>
+                    <b>Data: {{_Day}}/{{_Month}}/{{_Year}}</b>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="card col-12" style="border: solid 1px black;">
+            <div class="card-body" style="text-align: left;">
+              Firma: {{_NomeFornecedor}}
+              <br> Autorizamos a entregar ao portador(a): {{_condutor}}
+              <br> Veiculo : {{_placa}}
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <table class="table table-bordered col-12">
+            <tr>
+              <th>Qtd.</th>
+              <th>Descrição</th>
+              <th>Total</th>
+            </tr>
+            <tr>
+              <td bgcolor="black">1</td>
+              <td>Combustivel</td>
+              <td>{{_Total}}</td>
+            </tr>
+          </table>
+        </div>
+  <div style="margin-top: -20px;"></div>
+        <div class="row">
+          <div class="card col-9" style="border: solid 1px black;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  Debitar em nossa conta as mercadorias acima.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card col-3" style="border: solid 1px black;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <b>Total: {{_Total}}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="card col-12" style="border: solid 1px black;">
+            <div class="card-body">
+              Autorizado por:___________________________________________________________________
+              <br>
+              <b style="text-align: center; margin-left: 250px">{{_Usuario}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

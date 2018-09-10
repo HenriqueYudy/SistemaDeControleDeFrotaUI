@@ -1,0 +1,415 @@
+<div class="row">
+  <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="card text-center">
+      <div class="card-header">
+        <h2>
+          <font color="white">Rastreamento</font>
+        </h2>
+        <div class="row">
+
+          <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Procurar por..." id="address">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" id="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 col-4 col-lg-4 col-xl-4">
+            <div class="input-group">
+              <select id="localization" class="form-control">
+                <option selected>Selecione um veiculo</option>
+                <option *ngFor="let veiculoR of pontoCoord" value="{{veiculoR.latitude}} , {{veiculoR.longitude}}">{{veiculoR.veiculoAlocado.veiculo.placa}} - Frota: {{veiculoR.veiculoAlocado.frota.nome}}</option>
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" id="localizationBtn" data-toggle="modal" data-target="#localizationModal" (click)="localizarEndereco()">
+                  <i class="fas fa-street-view"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <button type="btn" id="atualizarBtn" class="btn btn-warning" (click)="initMapRaster()" title="Mostrar todos os veiculos">Atualizar mapa
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="card-body">
+        <div id="map"></div>
+      </div>
+      <div class="card-footer text-muted">
+        <div class="row">
+          <div class="col-6 col-md-1 col-lg-1 col-xl-1">
+            <button type="btn" id="tabelasBtn" (click)="mostrarTabelaAction()" class="btn btn-primary" title="Tabelas">
+              <i class="fas fa-table"></i>
+            </button>
+          </div>
+          <div class="col-6 col-md-1 col-lg-1 col-xl-1">
+            <button type="btn" id="buscarVeiculoBtn" class="btn btn-primary" (click)="mostrarBuscaVeiculo()" title="Buscar por veiculo">
+              <i class="fas fa-car">
+                <sup>
+                  <i class="fas fa-search"></i>
+                </sup>
+              </i>
+            </button>
+          </div>
+          <div class="col-6 col-md-1 col-lg-1 col-xl-1">
+            <button type="btn" id="buscarTecnicoBtn" class="btn btn-primary" (click)="mostrarBuscaCondutor()" title="buscar por tecnico">
+              <i class="fas fa-user-tag"></i>
+            </button>
+          </div>
+          <div class="col-6 col-md-1 col-lg-1 col-xl-1">
+            <button type="btn" id="visualizarBtn" class="btn btn-primary" title="Visualizar">
+              <i class="far fa-eye"></i>
+            </button>
+          </div>
+          <div class="col-6 col-md-1 col-lg-1 col-xl-1">
+            <button type="btn" id="mapaConfigBtn" class="btn btn-primary" title="Configurar o mapa" (click)="mostrarMapConfig()">
+              <i class="fas fa-map-marked-alt">
+                <sup>
+                  <i class="fa fa-cog"></i>
+                </sup>
+              </i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Tabelas de veiculos sendo rastreado -->
+<div class="tabelas" *ngIf="mostraTabela" [@enterAnimation]>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+      <table class="table table-hover table-responsive">
+        <thead class="thead">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Veiculo: Modelo</th>
+            <th scope="col">Veiculo: Placa</th>
+            <th scope="col">Veiculo: Frota </th>
+            <th scope="col">Condutor</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Vencimento CNH</th>
+            <th scope="col">rastreador: Imei</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let carInfo of pontoCoord">
+            <td>{{carInfo.id}}</td>
+            <td>{{carInfo.veiculoAlocado.veiculo.modelo.nome}}</td>
+            <td>{{carInfo.veiculoAlocado.veiculo.placa}}</td>
+            <td>{{carInfo.veiculoAlocado.frota.nome}}</td>
+            <td>{{carInfo.veiculoAlocado.condutor.nome}}</td>
+            <td>{{carInfo.veiculoAlocado.condutor.categoria}}</td>
+            <td>{{carInfo.veiculoAlocado.condutor.vencimento_cnh}}</td>
+            <td>{{carInfo.rastreador.imei}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- fim da tabela de veiculos  -->
+
+<!-- Formulario para procurar por veiculo -->
+
+<div class="findByVeiculo" *ngIf="mostraBuscaVeiculo" [@enterAnimation]>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+
+      <div class="card" id="card-veiculo">
+        <div class="card-header">
+          Buscar um veiculo
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Formulario de busca</h5>
+          <br>
+          <label for="veiculoRastreado">
+            <font color="black">Veiculo Rastreado</font>
+          </label>
+          <div class="input-group mb-2">
+            <select id="veiculoR" class="form-control">
+              <option selected>Selecione um veiculo</option>
+              <option *ngFor="let veiculoR of veiculosRastreados" value="{{veiculoR.rastreador.imei}}">{{veiculoR.veiculo_alocado.veiculo.placa}}| Frota: {{veiculoR.veiculo_alocado.frota.nome}}</option>
+            </select>
+          </div>
+
+
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+
+              <label for="data">Data</label>
+              <input type="date" class="form-control" id="dataV">
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <label for="hora_inicial">
+                <font color="black">Hora Inicial</font>
+              </label>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                </div>
+                <input [textMask]="{mask: hora}" id="horaInicial" type="text" class="form-control" placeholder="--:--:--">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <label for="hora_inicial">
+                <font color="black">Hora Final</font>
+              </label>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                </div>
+                <input [textMask]="{mask: hora}" id="horaFinal" type="text" class="form-control" placeholder="--:--:--">
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <button type="btn" id="buscarPosicaoBtn" class="btn btn-primary" (click)="buscarPosicao()">
+                Buscar posição atual
+                <i class="fas fa-map-marked"></i>
+              </button>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <button type="btn" id="buscarRotaBtn" class="btn btn-primary" (click)="buscarRota()">
+                Buscar rota do veiculo
+                <i class="fas fa-road"></i>
+              </button>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- fim do menu buscar veiculos -->
+
+<!-- Inicio do menu buscar condutor -->
+
+<div class="findByCondutor" *ngIf="mostraBuscaCondutor" [@enterAnimation]>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+
+      <div class="card" id="card-veiculo">
+        <div class="card-header">
+          Buscar um condutor
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Formulario de busca</h5>
+          <br>
+          <label for="veiculoRastreado">
+            <font color="black">Condutor</font>
+          </label>
+          <div class="input-group mb-2">
+            <select id="condutorR" class="form-control">
+              <option selected>Selecione um condutor</option>
+              <option *ngFor="let veiculoR of veiculosRastreados" value="{{veiculoR.rastreador.imei}}">{{veiculoR.veiculo_alocado.condutor.nome}}</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+
+              <label for="data">Data</label>
+              <input type="date" class="form-control" id="dataCondutor">
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <label for="hora_inicial">
+                <font color="black">Hora Inicial</font>
+              </label>
+              <div class="input-group mb-1">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                </div>
+                <input [textMask]="{mask: hora}" id="horaInicialCondutor" type="text" class="form-control" placeholder="--:--:--">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <label for="hora_inicial">
+                <font color="black">Hora Final</font>
+              </label>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                </div>
+                <input [textMask]="{mask: hora}" id="horaFinalCondutor" type="text" class="form-control" placeholder="--:--:--">
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <button type="btn" id="buscarPosicaoBtn" class="btn btn-primary" (click)="buscarPosicaoCondutor()">
+                Buscar posição atual
+                <i class="fas fa-map-marked"></i>
+              </button>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <button type="btn" id="buscarRotaBtn" class="btn btn-primary" (click)="buscarRotaCondutor()">
+                Buscar rota do veiculo
+                <i class="fas fa-road"></i>
+              </button>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Fim do menu do busca do condutor -->
+
+<!-- Inicio da opção do mapas -->
+
+<div class="mapOption" style="display: none;" id="menuMapa">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+
+      <div class="card">
+        <div class="card-header">
+          Configuração do Mapa
+        </div>
+        <div class="card-body" id="optionCard">
+
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <div id="style-selector-control" class="map-control">
+                <label for="style-selector">Tipo de mapa</label>
+                <select id="style-selector" class="selector-control" class="form-control">
+                  <option value="defauldt" selected="selected">Default</option>
+                  <option value="silver">Silver</option>
+                  <option value="night">Night mode</option>
+                  <option value="retro">Retro</option>
+                  <option value="hiding">Hide features</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+              <label for="trafficSwitch">Camada de Tráfego</label>
+              <div class="switch" id="trafficSwitch">
+                <input type="radio" class="switch-input" name="view" value="trafficOn" id="trafficOn">
+                <label for="trafficOn" class="switch-label switch-label-off">ON</label>
+                <input type="radio" class="switch-input" name="view" value="trafficOff" id="trafficOff" checked>
+                <label for="trafficOff" class="switch-label switch-label-on">OFF</label>
+                <span class="switch-selection"></span>
+              </div>
+            </div>
+
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+              <label for="trafficSwitch">Camada de Trânsito</label>
+              <div class="switch" id="trafficSwitch">
+                <input type="radio" class="switch-input" name="transit" value="transitOn" id="transitOn">
+                <label for="transitOn" class="switch-label switch-label-off">ON</label>
+                <input type="radio" class="switch-input" name="transit" value="transitOff" id="transitOff" checked>
+                <label for="transitOff" class="switch-label switch-label-on">OFF</label>
+                <span class="switch-selection"></span>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Fim da opção do mapas -->
+
+
+<!-- Modals -->
+
+<div class="modal fade" id="localizationModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"> Informação do endereço </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-7">
+            <label for="input1">Rua - Av.: </label>
+            <input type="text" readonly class="form-control" id="input1" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-7">
+            <label for="input2">Número - Bairro: </label>
+            <input type="text" readonly class="form-control" id="input2" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-7">
+            <label for="input3">Cidade - Estado: </label>
+            <input type="text" readonly class="form-control" id="input3" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-7">
+            <label for="input4">Cep: </label>
+            <input type="text" readonly class="form-control" id="input4" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save change</button>
+      </div>
+    </div>
+  </div>
+</div>

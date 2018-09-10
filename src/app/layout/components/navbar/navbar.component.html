@@ -1,0 +1,134 @@
+<div class="row">
+    <nav class="navbar navbar-expand-lg  col-sm-6 col-md-12 col-lg-12 col-xl-12">
+        <a class="navbar-brand" id="titulo" [routerLink]="['/dashboard']">{{titulo}}</a>
+        <a href="#" id="toggleButton" data-target="#sidebar" data-toggle="collapse" aria-expanded="false">
+            <i class="fas fa-bars fa-2x" id="expansive"></i>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  " id="navmenu">
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100" width="35px">
+                        {{User}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" [routerLink]="['/perfil']">Perfil</a>
+                        <a class="dropdown-item" href="#" (click)="deslogar()">Logout</a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid" class="no-print">
+    <div class="row d-flex d-md-block flex-nowrap wrapper">
+        <div class="col-md-3 float-left col-1 pl-0 pr-0 collapse width " id="sidebar">
+
+            <div class="list-group border-0 card text-center text-md-left">
+                <button type="button" class="close" aria-label="Close" id="closeB" data-target="#sidebar" data-toggle="collapse">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="text-center">
+                    <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100"
+                        class="circle" alt="..." id="usuario">
+                </div>
+                <h6>Usuário: {{User}}
+                    <div class="status">
+                        <i class="fa fa-circle online"></i> online
+                    </div>
+                </h6>
+                <a (click)="deslogar()" href="#">
+                    <h6>Logout
+                        <i class="fa fa-sign-out-alt"></i>
+                    </h6>
+                </a>
+
+                <a [routerLink]="['/dashboard']" class="list-group-item d-inline-block collapsed" data-toggle="#sidebar" data-parent="#sidebar">
+                    <i class="fab fa-cloudscale"></i>
+                    <h6 id="dash">Dashboard</h6>
+                    <span class="d-none d-md-inline">Dashboard</span>
+                </a>
+                <a [routerLink]="['/veiculos']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-car"></i>
+                    <h6 id="car">Veiculos</h6>
+                    <span class="d-none d-md-inline">Veiculos</span>
+                </a>
+                <a [routerLink]="['/tecnicos']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fas fa-id-badge"></i>
+                    <h6 id="tec">Técnicos</h6>
+                    <span class="d-none d-md-inline">Técnicos</span>
+                </a>
+                <a [routerLink]="['/frotas']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-flag"></i>
+                    <h6 id="frota">Frotas</h6>
+                    <span class="d-none d-md-inline">Frota</span>
+                </a>
+                <a [routerLink]="['/manutencao']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-wrench"></i>
+                    <h6 id="manu">Manutenção</h6>
+                    <span class="d-none d-md-inline">Manutenção</span>
+                </a>
+                <a [routerLink]="['/abastecimentos']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-tint"></i>
+                    <h6 id="abastecimento">Abastecimento</h6>
+                    <span class="d-none d-md-inline">Abastecimento</span>
+                </a>
+                <a [routerLink]="['/rastreadores']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-microchip"></i>
+                    <h6 id="rastreador">Rastreadores</h6>
+                    <span class="d-none d-md-inline">Rastreadores</span>
+                </a>
+                <a [routerLink]="['/servicoRastreamento']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fas fa-street-view"></i>
+                    <h6 id="servico-rastreamento">Serviço de rastreamento</h6>
+                    <span class="d-none d-md-inline">Serviços de rastreamento</span>
+                </a>
+                <a [routerLink]="['/tabletMap']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fas fa-street-view"></i>
+                    <h6 id="servico-rastreamento">TabletMap</h6>
+                    <span class="d-none d-md-inline">TabletMap</span>
+                </a>
+                <a [routerLink]="['/controleVeiculo']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-car"></i>
+                    <sup>
+                        <i class="fa fa-cogs"></i>
+                    </sup>
+                    <h6 id="controle-veiculo">Controle de veiculos</h6>
+                    <span class="d-none d-md-inline">Controle de veiculos</span>
+                </a>
+                <a [routerLink]="['/itemManutencao']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fas fa-cubes"></i><sup><i class="fas fa-wrench"></i></sup>
+                    <h6 id="itemManutencao">Item Manutenção</h6>
+                    <span class="d-none d-md-inline">Item Manutenção</span>
+                </a>
+                <a [routerLink]="['/produtoServicos']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fas fa-dolly-flatbed"></i>
+                    <h6 id="ProdutoServico">Produto e Serviços</h6>
+                    <span class="d-none d-md-inline">Produto e Serviço</span>
+                </a>
+                <a [routerLink]="['/fornecedor']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fas fa-truck"></i>
+                    <h6 id="config">Fornecedor</h6>
+                    <span class="d-none d-md-inline">Fornecedor</span>
+                </a>
+                <a [routerLink]="['/configuracao']" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <i class="fa fa-user"></i><sup><i class="fa fa-cogs"></i></sup>
+                    <h6 id="config">Configuração de usuario</h6>
+                    <span class="d-none d-md-inline">Configuração de Usuario</span>
+                </a>
+            </div>
+        </div>
+        <main class="col-md-12 col px-5 pl-md-2 pt-2 main mx-auto">
+
+
+
+        </main>
+    </div>
+</div>

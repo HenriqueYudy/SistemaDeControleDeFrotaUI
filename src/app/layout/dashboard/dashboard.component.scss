@@ -1,0 +1,107 @@
+#card1{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2em;    
+    position: relative; 
+
+}
+
+#infoCard{
+    max-height: 210 px; 
+    float: left;
+    text-align: center;
+    background-color: 	rgba(17, 115, 191, 0.748);
+}
+
+#carButton{
+    border-radius: 150px;
+    height: 100px;
+    width: 100px;
+    position: static;
+    margin: auto;
+    margin-top: -40px;
+}
+
+a{
+    position: static;
+    margin: auto;
+}
+
+#menu-header{
+    background-color: rgb(51, 108, 193);
+    color: white;   
+    text-align: center;
+}
+    
+
+
+#mapa1{
+    background-color: green;
+}
+
+#mapa1:hover{
+    border: outset 3px green;
+}
+
+#rastreador1{
+    background-color: rgb(182, 24, 24);
+}
+
+#emprego1{
+    background-color: rgb(48, 117, 220);
+}
+
+#abastecimento1{
+    background-color: rgb(255, 225, 0);
+}
+
+h4{
+   text-align: center;
+}
+
+
+#icone{
+    float: right;   
+    opacity: 0.2;
+}
+
+#icone2{
+    float: left;
+    opacity: 0.2;
+}
+
+sup{
+    opacity: 0.2;
+}
+
+#rastreador1{
+    background-color: green;
+    color: white;
+    text-align: center;
+}
+
+#icone3{
+    float: right;
+    opacity: 0.2;
+}
+
+#accordion{
+    color: black;
+}
+
+#abastecimentoD{    
+    background-color: rgb(174, 173, 173);
+    border: solid 1px rgb(106, 105, 105);
+}
+
+#manutencaoD{
+    background-color: rgb(174, 174, 174);
+    border: solid 1px rgb(106, 105, 105);
+    
+}
+
+.btn-link{
+    color: black;   
+    text-decoration-style: none;
+}
+

@@ -1,0 +1,112 @@
+<div class="container-fluid">
+
+
+
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['']">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/produtoServicos']">ProdutoServico</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">form</li>
+    </ol>
+  </nav>
+
+
+  <header>
+    <h2>
+      <font color="black">Cadastro de Produto e Serviço</font>
+    </h2>
+  </header>
+
+  <form [formGroup]="formProdutoServico">
+
+    <div class="row">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <label for="cod">
+          <font color="black">Código</font>
+        </label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-asterisk"></i>
+            </div>
+          </div>
+          <input readonly type="text" formControlName="id" [(ngModel)]="produtoServico.id" class="form-control">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <label for="nome">
+          <font color="black">Nome</font>
+        </label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fas fa-dolly-flatbed"></i>
+            </div>
+          </div>
+          <input type="text" formControlName="nome" [(ngModel)]="produtoServico.nome" class="form-control">
+        </div>
+        <app-campo-invalid [mostrarErro]="verificaValidTouched('nome')" msgErro="O nome do produto ou serviço obrigatório.">
+        </app-campo-invalid>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <label for="valor">
+          <font color="black">Valor</font>
+        </label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-money-bill-alt"></i>
+            </div>
+          </div>
+          <input type="number" formControlName="valor" [(ngModel)]="produtoServico.valor" class="form-control">
+        </div>
+        <app-campo-invalid [mostrarErro]="verificaValidTouched('valor')" msgErro="O valor do produto ou serviço obrigatório.">
+        </app-campo-invalid>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <label for="descricao">
+          <font color="black">Descrição</font>
+        </label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fas fa-file-alt"></i>
+            </div>
+          </div>
+          <textarea cols="1000" rows="5" formControlName="descricao" [(ngModel)]="produtoServico.descricao" class="form-control">
+
+            </textarea>
+        </div>
+        <app-campo-invalid [mostrarErro]="verificaValidTouched('descricao')" msgErro="A descrição do produto ou serviço é obrigatório.">
+        </app-campo-invalid>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <button type="button" class="btn btn-success" [disabled]="!formProdutoServico.valid" (click)="save()">Salvar
+          <i class="fa fa-save"></i>
+        </button>
+
+        <button type="reset" class="btn btn-danger">Cancelar
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>

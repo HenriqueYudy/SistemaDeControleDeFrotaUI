@@ -1,0 +1,275 @@
+<div [@routerTransition]>
+    <div class="container-fluid">
+
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a [routerLink]="['']">home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a [routerLink]="['/controleVeiculo']">controleVeiculo</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a [routerLink]="['/controleVeiculo/empregoVeiculo']">empregoVeiculo</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">form</li>
+            </ol>
+        </nav>
+
+        <header>
+            <h2>
+                <font color="black">Formulario de emprego de veiculo</font>
+            </h2>
+        </header>
+
+
+        <form [formGroup]="formEmpregoVeiculo">
+
+            <div class="row">
+                <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <label for="cod">
+                        <font color="black">Código</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-asterisk"></i>
+                            </div>
+                        </div>
+                        <input readonly type="text" formControlName="id" [(ngModel)]=empregoVeiculo.id class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <div formGroupName="condutor">
+                        <label for="condutor">
+                            <font color="black">Condutor</font>
+                        </label>
+                        <div class="input-group mb-2">
+                            <select id="condutor" formControlName="id" [(ngModel)]="empregoVeiculo.condutor.id" class="form-control">
+                                <option selected>Selecione um condutor</option>
+                                <option *ngFor="let condutor of condutores" value="{{condutor.id}}">{{condutor.nome}}</option>
+                            </select>
+                            <div class="input-group-prepend">
+                                <div class="input-group-btn">
+                                    <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#condutorModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <app-campo-invalid [mostrarErro]="verificaValidTouched('condutor.id')" msgErro="O condutor é obrigatório.">
+                        </app-campo-invalid>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <div formGroupName="veiculo_alocado">
+                        <label for="veiculo">
+                            <font color="black">Veiculo</font>
+                        </label>
+                        <div class="input-group mb-2">
+                            <select id="veiculo" formControlName="id" [(ngModel)]="empregoVeiculo.veiculo_alocado.id" class="form-control">
+                                <option selected>Selecione um veiculo</option>
+                                <option *ngFor="let veiculoAlocado of veiculoAlocados" value="{{veiculoAlocado.id}}">{{veiculoAlocado.veiculo.placa}} - {{veiculoAlocado.frota.nome}}</option>
+                            </select>
+                            <div class="input-group-prepend">
+                                <div class="input-group-btn">
+                                    <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#veiculoModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <app-campo-invalid [mostrarErro]="verificaValidTouched('veiculo_alocado.id')" msgErro="A data de inicio é obrigatório.">
+                        </app-campo-invalid>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <label for="hodometro">
+                        <font color="black">Hodômetro</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                        </div>
+                        <input type="number" formControlName="hodometro" [(ngModel)]="empregoVeiculo.hodometro" class="form-control">
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('hodometro')" msgErro="O hodometro é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="data_utilizacao">
+                        <font color="black">Data de Utilização</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                        </div>
+                        <input type="date" formControlName="data_utilizacao" [(ngModel)]="empregoVeiculo.data_utilizacao" class="form-control">
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('data_utilizacao')" msgErro="A data de utilização do veiculo é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="data_saida">
+                        <font color="black">Data de saida</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                        <input type="date" formControlName="data_saida" [(ngModel)]="empregoVeiculo.data_saida" class="form-control">
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('data_saida')" msgErro="A data de saida é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="hora_saida">
+                        <font color="black">Hora de saída</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                        <input [textMask]="{mask: hora}" type="text" formControlName="hora_saida" [(ngModel)]="empregoVeiculo.hora_saida" class="form-control"
+                            placeholder="--:--:--">
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('hora_saida')" msgErro="A hora de saida é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="data_chegada">
+                        <font color="black">Data de chegada</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                        <input readonly id="dataChegada" type="date" formControlName="data_chegada" [(ngModel)]="empregoVeiculo.data_chegada" class="form-control">
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('data_chegada')" msgErro="A data de chegada é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <label for="hora_chegada">
+                        <font color="black">Hora de chegada</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                        <input id="horaChegada" readonly placeholder="--:--:--" [textMask]="{mask : hora}" type="text" formControlName="hora_chegada" [(ngModel)]="empregoVeiculo.hora_chegada"
+                            class="form-control">
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('hora_chegada')" msgErro="A hora de chegada é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <label for="motivo_utilizacao">
+                        <font color="black">Motivo de utilização</font>
+                    </label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                        </div>
+                        <textarea cols="1000" rows="5" formControlName="motivo_utilizacao" [(ngModel)]="empregoVeiculo.motivo_utilizacao" class="form-control">
+                            
+                        </textarea>
+                    </div>
+                    <app-campo-invalid [mostrarErro]="verificaValidTouched('motivo_utilizacao')" msgErro="A hora de chegada é obrigatório.">
+                    </app-campo-invalid>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+                    <button type="button" class="btn btn-success" [disabled]="!formEmpregoVeiculo.valid" (click)="save()">Salvar
+                        <i class="fa fa-save"></i>
+                    </button>
+
+                    <button type="reset" class="btn btn-danger">Cancelar
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="condutorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <condutor-form></condutor-form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="veiculoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <veiculo-alocado-form></veiculo-alocado-form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

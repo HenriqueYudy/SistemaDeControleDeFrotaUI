@@ -1,0 +1,193 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/servicoRastreamento']">servicoRastreado</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+    <header>
+      <h2>
+        <font color="black">Formulario de vinculo de rastreador</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formVeiculoRastreado">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="veiculoRastreado.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="veiculo_alocado">
+            <label for="veiculo_alocado">
+              <font color="black">Veiculo</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="veiculo_alocado" formControlName="id" [(ngModel)]="veiculoRastreado.veiculoAlocado.id" class="form-control">
+                <option selected>Selecione um veiculo</option>
+                <option *ngFor="let veiculoAlocado of veiculoAlocados" value="{{veiculoAlocado.id}}">{{veiculoAlocado.veiculo.placa}} - {{veiculoAlocado.frota.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#veiculoAlocadoModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('veiculo_alocado.id')"
+             msgErro="O veiculo a ser rastreador é obrigatório.">
+           </app-campo-invalid>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="rastreador">
+            <label for="rastreador">
+              <font color="black">Rastreador</font> 
+            </label>
+            <div class="input-group mb-2">
+              <select id="rastreador" formControlName="id" [(ngModel)]="veiculoRastreado.rastreador.id" class="form-control">
+                <option selected>Selecione um rastreador</option>
+                <option *ngFor="let rastreador of rastreadores" value="{{rastreador.id}}">{{rastreador.imei}} - {{rastreador.numero_chip}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#rastreadorModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('rastreador.id')"
+             msgErro="O rastreador é obrigatório.">
+           </app-campo-invalid>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="data_inicio">
+            <font color="black">Data de inicio</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar-check"></i>
+              </div>
+            </div>
+            <input type="date" formControlName="data_inicio" [(ngModel)]="veiculoRastreado.data_inicio" class="form-control">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('data_inicio')"
+           msgErro="A data de inicio é obrigatório.">
+         </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="data_termino">
+            <font color="black">Data de termino</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar-times"></i>
+              </div>
+            </div>
+            <input readonly  id="termino" type="date" formControlName="data_termino" [(ngModel)]="veiculoRastreado.data_termino" class="form-control">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('data_termino')"
+           msgErro="A data de termino é obrigatório.">
+         </app-campo-invalid>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+          <button type="submit" class="btn btn-success" [disabled]="!formVeiculoRastreado.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+
+        </div>
+      </div>
+
+    </form>
+
+
+    <div class="modal fade" id="veiculoAlocadoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <veiculo-alocado-form></veiculo-alocado-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="rastreadorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <rastreador-form></rastreador-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

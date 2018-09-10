@@ -1,0 +1,169 @@
+<div [@routerTransition]>
+
+  <div class="row">
+
+    <div class="card text-white bg-primary col-6  col-md-3  col-lg-2  col-xl-3" id="infoCard">
+      <div class="card-header">
+        <br>
+      </div>
+      <a [routerLink]="['/veiculos']">
+        <button type="btn" class="btn btn-dark" id="carButton">
+          <i class="fa fa-car fa-fw fa-2x"></i>
+        </button>
+      </a>
+      <div class="card-body">
+        <h5 class="card-title">Veiculos Cadastrados:</h5>
+        <p class="card-text" id="card1">{{veiculosTotal}}</p>
+      </div>
+    </div>
+
+    <div class="card text-white bg-danger col-6 offset-sm-1 col-md-3 offset-md-1 col-lg-3 offset-lg-1 col-xl-3 offset-xl-1" id="infoCard">
+      <div class="card-header">
+        <br>
+      </div>
+
+      <a [routerLink]="['/tecnicos/condutor']">
+        <button type="btn" class="btn btn-dark" id="carButton">
+          <i class="fa fa-users fa-fw fa-2x"></i>
+        </button>
+      </a>
+
+      <div class="card-body">
+        <h5 class="card-title">Técnicos Cadastrados:</h5>
+        <p class="card-text" id="card1">{{tecnicoTotal}}</p>
+      </div>
+    </div>
+
+    <div class="card text-white bg-info  col-12 offset-sm-1 col-md-3 offset-md-1 col-lg-3 offset-lg-1 col-xl-3 offset-xl-1 "
+      id="infoCard">
+      <div class="card-header">
+        <br>
+      </div>
+
+      <a [routerLink]="['/controleVeiculo/empregoVeiculo']">
+        <button type="btn" class="btn btn-dark" id="carButton">
+          <i class="fa fa-road fa-fw fa-2x"></i>
+        </button>
+      </a>
+
+
+      <div class="card-body">
+        <h5 class="card-title">Veiculos Empregados:</h5>
+        <p class="card-text" id="card1">{{veiculosEmpregadosTotal}}</p>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-12 col-md-9 col-lg-9 col-xl-9">
+      <h4>Gráfico de Despesas</h4>
+      <p-chart type="bar" [data]="data"></p-chart>
+    </div>
+
+    <div class="card text-white col-12 col-md-3 col-lg-3 col-xl-3" id="infoCard">
+      <div class="card-header">
+        <br>
+      </div>
+
+      <a [routerLink]="['/controleVeiculo/empregoVeiculo']">
+        <button type="btn" class="btn btn-dark" id="carButton">
+          <i class="fa fa-road fa-fw fa-2x"></i>
+        </button>
+      </a>
+
+
+      <div class="card-body" id="gastosCard">
+        <h5 class="card-title">Ultimas Despesas</h5>
+
+
+        <div id="accordion">
+          <div class="card" id="abastecimentoD">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Abastecimento
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                Valor: valor-total
+              </div>
+            </div>
+          </div>
+
+          <div class="card" id="manutencaoD">
+            <div class="card-header" id="heading2">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseOne">
+                  Manutenção
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapse2" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <p>Descrição: descricao</p>
+                <p>Valor: Valor</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+
+  <div class="row">
+    <div class="card col-12 col-md-3 col-lg-3 col-xl-3" id="rastreador1">
+
+      <div class="card-body">
+        <i class="fa fa-microchip fa-fw fa-3x" id="icone3"></i>
+
+        <h6>Rastreadores:</h6>
+        {{rastreadorTotal}}
+
+      </div>
+    </div>
+
+
+
+    <div class="card col-12 col-md-3 col-lg-3 offset-md-1 col-xl-3" id="rastreador1">
+
+      <div class="card-body">
+        <i class="fa fa-microchip fa-fw fa-3x" id="icone3"></i>
+
+        <h6>Veiculo rastreados:</h6>
+        {{VeiculoRastreadosTotal}}
+
+      </div>
+    </div>
+
+    <div class="card col-12 col-md-3 col-lg-3 offset-md-1 col-xl-3" id="rastreador1">
+
+      <div class="card-body">
+        <i class="fa fa-microchip fa-fw fa-3x" id="icone3"></i>
+
+        <h6>Rastreadores:</h6>
+    
+
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+
+</div>

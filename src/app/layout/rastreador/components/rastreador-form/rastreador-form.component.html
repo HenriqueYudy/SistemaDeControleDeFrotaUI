@@ -1,0 +1,104 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb" id="pegada" *ngIf="mostrarPegada">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/rastreadores']">rastreadores</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Rastreador</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formRastreador">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="rastreador.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="numero_chip">
+            <font color="black">Número do Chip</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-tty"></i>
+              </div>
+            </div>
+            <input id="numeroChip" [textMask]="{mask: telefoneMask}" type="text" formControlName="numero_chip" [(ngModel)]="rastreador.numero_chip" class="form-control"
+              placeholder="(  )_____-____">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('numero_chip')"
+           msgErro="O número do chip do rastreador é obrigatório.">
+         </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="imei">
+            <font color="black">Imei</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fab fa-staylinked"></i>
+              </div>
+            </div>
+            <input minlength="18" type="text" [textMask]="{mask: imeiMask}" formControlName="imei" [(ngModel)]="rastreador.imei" class="form-control"
+              placeholder="______-__-______-_">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('imei')"
+           msgErro="O imei do rastreador é obrigatório.">
+         </app-campo-invalid>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button type="submit" class="btn btn-success" [disabled]="!formRastreador.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+
+
+
+
+    </form>
+
+  </div>
+</div>

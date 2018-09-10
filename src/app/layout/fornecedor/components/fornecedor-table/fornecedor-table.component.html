@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input #gb type="text" pInputText size="30" placeholder="Filtro Global">
+
+
+      <div id="table">
+        <p-dataTable [value]="fornecedores" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt scrollable="true" scrollWidth="100%"
+          [style]="{'margin-top':'30px'}">
+          <p-header>Lista de Fornecedores</p-header>
+          <p-column field="id" header="ID" [filter]="true" filterPlaceholder="ID" [style]="{'width':'150px'}"></p-column>
+
+          <p-column field="nome" header="Nome" [filter]="true" filterMatchMode="equals" filterPlaceholder="Nome" [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-column field="cnpj" header="CNPJ" [filter]="true" filterMatchMode="equals" filterPlaceholder="CNPJ" [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-footer>
+            <div class="ui-helper-clearfix" style="width:10%" class="noprint">
+              <a routerLink="form">
+                <button type="btn" class="btn btn-info" icon="fa-plus" label="Add" iconPos="left">Add
+                  <i class="fa fa-plus"></i>
+                </button>
+              </a>
+            </div>
+          </p-footer>
+
+        </p-dataTable>
+      </div>
+    </div>
+  </div>
+</div>

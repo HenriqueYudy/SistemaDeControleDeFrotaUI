@@ -1,0 +1,146 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb" id="pegada" *ngIf="mostrarPegada">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/veiculos']">veiculos</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/veiculos/modelo']">modelo</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Modelo</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formModelo">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-2">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="modelo.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-8 col-lg-8 col-xl-8">
+          <label for="nome">
+            <font color="black">Nome</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fab fa-maxcdn"></i>
+              </div>
+            </div>
+            <input type="text" formControlName="nome" [(ngModel)]="modelo.nome" class="form-control">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('nome')"
+           msgErro="O nome do modelo é obritagório.">
+         </app-campo-invalid>
+        </div>
+      </div>
+
+      <div class="row">
+
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="ano">
+            <font color="black">Ano</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar"></i>
+              </div>
+            </div>
+            <input type="number" formControlName="ano" [(ngModel)]="modelo.ano" class="form-control">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('ano')"
+           msgErro="O ano do modelo é obrigatório.">
+         </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="marca">
+            <label for="marca">
+              <font color="black">Marca</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="marca" formControlName="id" [(ngModel)]="modelo.marca.id" class="form-control">
+                <option selected>Selecione uma marca</option>
+                <option *ngFor="let marca of marcas" value="{{marca.id}}">{{marca.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#marcaModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('marca.id')"
+             msgErro="A marca do modelo é obrigatório.">
+           </app-campo-invalid>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button type="submit" class="btn btn-success" [disabled]="!formModelo.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+
+    <div class="modal fade" id="marcaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <marca-form></marca-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

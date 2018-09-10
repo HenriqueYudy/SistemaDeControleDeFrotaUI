@@ -1,0 +1,38 @@
+.modal-header{
+    background-color: green;
+}
+
+.ng-invalid.ng-touched:not(form):not(div){
+    border: solid 1px red;
+    border-radius: 5px;
+}
+
+.ng-valid:not(form):not(div){
+    border: solid 1px rgb(13, 208, 13);
+    border-radius: 5px;
+}
+
+.selected {
+    background-color: brown;
+    color: #FFF;
+}
+
+.table{
+    max-height: 700px;
+}
+
+.modal{
+    max-height: 600px;
+}
+
+
+.card-body{
+    background-color: rgb(209, 208, 208);
+   
+}
+
+.card-header{   
+    background-color: rgb(209, 208, 208);
+    border-radius: 5px;
+    border: solid 1px rgb(209, 208, 208);
+}

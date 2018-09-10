@@ -1,0 +1,13 @@
+<ul class="menu cf">
+    <li>
+      <a [routerLink]="['usuario']">Usuário <i class="fas fa-user"></i> </a>
+    </li>
+    <li>
+      <a  (click)="alerta()" >Permissões de usuário <i class="fa fa-user"></i> <sup><i class="fa fa-cogs"></i></sup></a>
+    </li>
+    <li>
+      <a [routerLink]="['permissoes']">Permissão <i class="fas fa-key"></i></a>
+    </li>
+  </ul>
+
+  <!-- [routerLink]="['usuario-permissao']" -->

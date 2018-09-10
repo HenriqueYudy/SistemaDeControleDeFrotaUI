@@ -1,0 +1,75 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb" *ngIf="mostrarBread">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/manutencao']">manutencao</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/manutencao/classificacao']">classificação</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Classificação</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formClassificacao">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="classificacao.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <label for="descricao">
+            <font color="black">Descrição</font>
+          </label>
+          <textarea rows="2" cols="1000" formControlName="descricao" [(ngModel)]="classificacao.descricao" class="form-control">
+
+    </textarea>
+    <app-campo-invalid
+    [mostrarErro]="verificaValidTouched('descricao')"
+     msgErro="A descrição da classificação é obrigatorio.">
+   </app-campo-invalid>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button type="submit" class="btn btn-success" [disabled]="!formClassificacao.valid" (click)="save()">Salvar
+            <i class="fa fa-plus"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+
+  </div>
+</div>

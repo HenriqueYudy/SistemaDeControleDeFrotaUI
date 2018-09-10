@@ -1,0 +1,16 @@
+.btn-toolbar{
+    justify-content: center;
+}
+
+
+
+.card-body{
+    background-color: rgb(238, 235, 235);
+   
+}
+
+.card-header{
+    background-color: rgb(238, 235, 235);
+    border-radius: 5px;
+    border: solid 1px rgb(194, 192, 192);
+}

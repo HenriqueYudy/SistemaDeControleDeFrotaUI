@@ -1,0 +1,14 @@
+.modal-header{
+    background-color: green;
+}
+
+.ng-invalid.ng-touched:not(form):not(div){
+    border: solid 1px red;
+    border-radius: 5px;
+}
+
+
+.ng-valid:not(form):not(div){
+    border: solid 1px rgb(19, 219, 19);
+    border-radius: 5px;
+}

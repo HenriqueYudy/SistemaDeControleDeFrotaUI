@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input #gb type="text" pInputText size="30" placeholder="Filtro Global">
+
+
+      <div id="table">
+        <p-dataTable [value]="veiculoRastreados" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt scrollable="true" scrollWidth="100%"
+          [style]="{'margin-top':'30px'}">
+          <p-header>Tabela de veiculos rastreados</p-header>
+          <p-column field="id" header="ID" [filter]="true" filterPlaceholder="ID" [style]="{'width':'150px'}"></p-column>
+
+          <p-column field="data_inicio" header="Data de inicio" [filter]="true" filterMatchMode="equals" filterPlaceholder="Data de inicio"
+            [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-column field="data_termino" header="Data de termino" [filter]="true" filterMatchMode="equals" filterPlaceholder="Data de termino"
+            [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-column field="rastreador.imei" header="Rastreador" [filter]="true" filterMatchMode="equals" filterPlaceholder="Rastreador"
+            [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-column field="veiculo_alocado.veiculo.placa" header="Veiculo rastreado" [filter]="true" filterMatchMode="equals" filterPlaceholder="Veiculo rastreado"
+            [style]="{'width':'150px'}">
+          </p-column>
+
+          <p-footer>
+            <div class="ui-helper-clearfix" style="width:10%" class="noprint">
+              <a routerLink="form">
+                <button type="btn" class="btn btn-info" icon="fa-plus" label="Add" iconPos="left">Add
+                  <i class="fa fa-plus"></i>
+                </button>
+              </a>
+            </div>
+          </p-footer>
+
+        </p-dataTable>
+      </div>
+    </div>
+  </div>
+</div>

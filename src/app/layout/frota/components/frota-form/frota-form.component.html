@@ -1,0 +1,126 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb" *ngIf="mostrarBread">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/frotas']">frotas</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Frota</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formFrota">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="frota.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <label for="nome">
+            <font color="black">Nome</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-flag"></i>
+              </div>
+            </div>
+            <input type="text" formControlName="nome" [(ngModel)]="frota.nome" class="form-control">
+          </div>
+          <app-campo-invalid
+          [mostrarErro]="verificaValidTouched('nome')"
+           msgErro="O nome da frota é obrigatório.">
+         </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div formGroupName="empresa">
+            <label for="empresa">
+              <font color="black">Empresa</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="empresa" formControlName="id" [(ngModel)]="frota.empresa.id" class="form-control">
+                <option selected>Selecione uma Empresa</option>
+                <option *ngFor="let empresa of empresas" value="{{empresa.id}}">{{empresa.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#empresaModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('empresa.id')"
+             msgErro="A empresa da frota é obrigatório.">
+           </app-campo-invalid>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+          <button type="submit" class="btn btn-success" [disabled]="!formFrota.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+
+        </div>
+      </div>
+
+
+    </form>
+
+
+    <div class="modal fade" id="empresaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <empresa-form></empresa-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

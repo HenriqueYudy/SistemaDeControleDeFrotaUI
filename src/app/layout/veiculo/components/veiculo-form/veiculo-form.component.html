@@ -1,0 +1,197 @@
+<div [@routerTransition]>
+  <div class="container-fluid">
+
+    <nav aria-label="breadcrumb" *ngIf="mostrarBread">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['']">home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/veiculos']">veiculo</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">form</li>
+      </ol>
+    </nav>
+
+    <header>
+      <h2>
+        <font color="black">Cadastro de Veiculo</font>
+      </h2>
+    </header>
+
+    <form [formGroup]="formVeiculo">
+
+      <div class="row">
+        <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+          <label for="cod">
+            <font color="black">Código</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-asterisk"></i>
+              </div>
+            </div>
+            <input readonly type="text" formControlName="id" [(ngModel)]="veiculo.id" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4" >
+          <label for="ano">
+            <font color="black">Ano de fabricação</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-calendar"></i>
+              </div>
+            </div>
+            <input  type="number" formControlName="ano_fabricacao" [(ngModel)]="veiculo.ano_fabricacao" class="form-control">
+          </div>
+          <app-campo-invalid
+           [mostrarErro]="verificaValidTouched('ano_fabricacao')"
+            msgErro="Ano de fabricação é obrigatório.">
+          </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4" id="selModalo">
+          <div formGroupName="modelo">
+            <label for="modelo">
+              <font color="black">Modelo</font>
+            </label>
+            <div class="input-group mb-2">
+              <select id="modelo" formControlName="id" [(ngModel)]="veiculo.modelo.id" class="form-control">
+                <option selected>Selecione um modelo</option>
+                <option *ngFor="let modelo   of modelos" value="{{modelo.id}}">{{modelo.nome}}</option>
+              </select>
+              <div class="input-group-prepend">
+                <div class="input-group-btn">
+                  <button type="btn" class="btn btn-info" data-toggle="modal" data-target="#modeloModal">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('modelo.id')"
+             msgErro="O modelo do veiculo é obrigatório.">
+           </app-campo-invalid>
+          </div>
+        </div>
+
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="cor">
+            <font color="black">Cor</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-tint"></i>
+              </div>
+            </div>
+            <input type="text" formControlName="cor" [(ngModel)]="veiculo.cor" class="form-control">
+          </div>
+          <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('cor')"
+             msgErro="A cor do veiculo é obrigatório.">
+           </app-campo-invalid>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="placa">
+            <font color="black">Placa</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-car"></i>
+              </div>
+            </div>
+            <input [textMask]="{mask: placaMask}" type="text" formControlName="placa" [(ngModel)]="veiculo.placa" class="form-control"
+              placeholder="___-____">
+          </div>
+          <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('placa')"
+             msgErro="O placa do veiculo é obrigatório.">
+           </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="chassi">
+            <font color="black">Chassi</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-car"></i>
+              </div>
+            </div>
+            <input type="text" formControlName="chassi" [(ngModel)]="veiculo.chassi" class="form-control" maxlength="17">
+          </div>
+          <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('chassi')"
+             msgErro="O chassi do veiculo é obrigatório.">
+           </app-campo-invalid>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <label for="renavam">
+            <font color="black">Renavam</font>
+          </label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fa fa-car"></i>
+              </div>
+            </div>
+            <input type="text" formControlName="renavam" [(ngModel)]="veiculo.renavam" class="form-control" maxlength="11">
+          </div>
+          <app-campo-invalid
+            [mostrarErro]="verificaValidTouched('renavam')"
+             msgErro="O renavam do veiculo é obrigatório.">
+           </app-campo-invalid>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button type="submit" class="btn btn-success" [disabled]="!formVeiculo.valid" (click)="save()">Salvar
+            <i class="fa fa-save"></i>
+          </button>
+
+          <button type="reset" class="btn btn-danger">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="modal fade" id="modeloModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <modelo-form></modelo-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+
+    <div class="row">
+
+      <!-- Painel do usuario -->
+      <div class="card col-12 col-md-3 col-lg-3 col-xl-3">
+        <div class="card-header">
+          <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?resize=256%2C256&quality=100"
+            width="150px">
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="#">Editar Perfil</a></li>
+            <li class="list-group-item"><a href="#">Redefinição de senha</a></li>
+            <li class="list-group-item"><a href="#">Deslogar</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Painel do usuario dados -->
+
+      <div class="card col-12 col-md-9 col-lg-9 col-xl-9">
+        <div class="card-header">
+          Dados do seu usuario
+        </div>
+        <div class="card-body">
+          <!-- Formulario Usuario -->
+          <form [formGroup]="formUsuario">
+
+            <div class="row">
+              <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <label for="cod">
+                  <font color="black">Sequencial</font>
+                </label>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-asterisk"></i>
+                    </div>
+                  </div>
+                  <input readonly type="text" id="id" formControlName="id" [(ngModel)]="usuario.id" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <label for="nome">
+                  <font color="black">Nome</font>
+                </label>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-user"></i>
+                    </div>
+                  </div>
+                  <input readonly type="text" formControlName="nome" [(ngModel)]="usuario.nome" class="form-control">
+                </div>
+                <app-campo-invalid [mostrarErro]="verificaValidTouched('nome')" msgErro="O nome do usuario é obrigatório.">
+                </app-campo-invalid>
+              </div>
+
+              <div class="form-group col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <label for="username">
+                  <font color="black">Nome de usuario</font>
+                </label>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-user"></i>
+                    </div>
+                  </div>
+                  <input readonly type="text" formControlName="username" [(ngModel)]="usuario.username" class="form-control">
+                </div>
+                <app-campo-invalid [mostrarErro]="verificaValidTouched('username')" msgErro="O nome de usuario é obrigatório.">
+                </app-campo-invalid>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <label for="email">
+                  <font color="black">Email</font>
+                </label>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fas fa-at"></i>
+                    </div>
+                  </div>
+                  <input readonly type="email" formControlName="email" [(ngModel)]="usuario.email" class="form-control">
+                </div>
+                <app-campo-invalid [mostrarErro]="verificaValidTouched('email')" msgErro="O nome de usuario é obrigatório.">
+                  </app-campo-invalid>
+              </div>
+
+              
+            </div>
+
+
+
+          </form>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+
+  </div>
+</div>
